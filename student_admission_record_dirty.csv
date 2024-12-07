@@ -1,6 +1,6 @@
 Name,Age,Gender,Admission Test Score,High School Percentage,City,Admission Status
 Shehroz,24.0,Female,50.0,68.9,Quetta,Rejected
-Waqar,21.0,Female,99.0,60.73,Karachi,
+Waqar,21.0,Female,99.0,60.73,Karachi,Accepted
 Bushra,17.0,Male,89.0,,Islamabad,Accepted
 Aliya,17.0,Male,55.0,85.29,Karachi,Rejected
 Bilal,20.0,Male,65.0,61.13,Lahore,
