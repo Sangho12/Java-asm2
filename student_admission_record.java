@@ -1,8 +1,6 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class student_admission_record {
     public String Name;
@@ -63,17 +61,19 @@ public class student_admission_record {
         return getName() + "," + getAge() + "," + getGender() + "," + getScore() + "," + getPercentage() + "," + getCity() + "," + getIsaccepted();
     }
 
-    public static ArrayList<student_admission_record> read(File f) throws FileNotFoundException {
+    public static ArrayList<student_admission_record> read(File f) {
         String Name, Gender, City;
         double Age, Score, Percentage;
         boolean Isaccepted;
         student_admission_record a;
         ArrayList<student_admission_record> student_admission_records = new ArrayList<student_admission_record>();
 
-        Scanner in = new Scanner(f);
-        in.nextLine(); //Skip header
-        //while (in.hasNextLine()){
-        for (int i = 0; i < 2; i ++) {
+        try {
+            Scanner in = new Scanner(f);
+
+            in.nextLine(); //Skip header
+            //while (in.hasNextLine()){
+            //for (int i = 0; i < 2; i ++) {
             String line = in.nextLine();
             Scanner token = new Scanner(line);
             token.useDelimiter(",");
@@ -92,8 +92,16 @@ public class student_admission_record {
             a = new student_admission_record(Name, Age, Gender, Score, Percentage, City, Isaccepted);
             student_admission_records.add(a);
             // }
+            //}
+            //Handler of the @output annotation here, the parameter are the method's name, the class type of the method, and the return value of the method
+            //Possible extension, the write method has no return value, how can we modify the processor such that it is also usable in the write method
+            AnnotationProcessor.OutputProcessor("read", student_admission_record.class, student_admission_records);
+            return student_admission_records;
+
+        } catch (FileNotFoundException | RuntimeException e) {
+            throw new RuntimeException(e);
         }
-        return student_admission_records;
+
     }
 
 
@@ -109,7 +117,7 @@ public class student_admission_record {
         out.close();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, NoSuchMethodException {
         ArrayList<student_admission_record> a = student_admission_record.read(new File("/Users/Sangho/Desktop/Java/asm2/student_admission_record_dirty.csv"));
         for (student_admission_record stu : a){
             System.out.println(stu);
