@@ -61,6 +61,7 @@ public class student_admission_record {
         return getName() + "," + getAge() + "," + getGender() + "," + getScore() + "," + getPercentage() + "," + getCity() + "," + getIsaccepted();
     }
 
+    @Output
     public static ArrayList<student_admission_record> read(File f) {
         String Name, Gender, City;
         double Age, Score, Percentage;
@@ -104,9 +105,11 @@ public class student_admission_record {
 
     }
 
-
+    @CustomFileName
     public static void write (ArrayList<student_admission_record> student_admission_records) throws IOException {
-        File f = new File(System.getProperty("user.dir") + "/test.csv");
+        //AnnotationProcessor here to get the output File name
+        String Filename = AnnotationProcessor.OutputFileName("write", student_admission_record.class);
+        File f = new File(System.getProperty("user.dir") + "/" + Filename + ".csv");
         PrintWriter out = new PrintWriter(new FileOutputStream(f));
         if (!f.exists()){
             f.createNewFile();
@@ -117,11 +120,8 @@ public class student_admission_record {
         out.close();
     }
 
-    public static void main(String[] args) throws IOException, NoSuchMethodException {
+    public static void main(String[] args) throws IOException {
         ArrayList<student_admission_record> a = student_admission_record.read(new File("/Users/Sangho/Desktop/Java/asm2/student_admission_record_dirty.csv"));
-        for (student_admission_record stu : a){
-            System.out.println(stu);
-        }
         student_admission_record.write(a);
     }
 }
