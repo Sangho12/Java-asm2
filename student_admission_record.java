@@ -108,7 +108,7 @@ public class student_admission_record {
     @CustomFileName
     public static void write (ArrayList<student_admission_record> student_admission_records) throws IOException {
         //AnnotationProcessor here to get the output File name
-        String Filename = AnnotationProcessor.OutputFileName("write", student_admission_record.class);
+        String Filename = AnnotationProcessor.CustomFileName("write", student_admission_record.class);
         File f = new File(System.getProperty("user.dir") + "/" + Filename + ".csv");
         PrintWriter out = new PrintWriter(new FileOutputStream(f));
         if (!f.exists()){

@@ -1,7 +1,6 @@
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class AnnotationProcessor {
 
@@ -18,20 +17,16 @@ public class AnnotationProcessor {
         }
     }
 
-    public static String OutputFileName(String methodName, Class<?> clazz){
+    public static String CustomFileName(String methodName, Class<?> clazz){
         try{
             Method method = clazz.getMethod(methodName, ArrayList.class);
-            String name = "output.csv";
+            String Filename = "DefaultName";
             if (method.isAnnotationPresent(CustomFileName.class)){
-                Scanner in = new Scanner(System.in);
-                System.out.println("Please input your output file name below: ");
-                name = in.nextLine();
-                while (name == ""){
-                    System.out.println("Invalid name, file name can't be empty." + "\n" + "Please enter again:");
-                    name = in.nextLine();
-                }
+                CustomFileName annotation = method.getAnnotation(CustomFileName.class);
+                Filename = annotation.Name();
+                return Filename;
             }
-            return name;
+            return Filename;
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("Invalid method name: " + methodName);
         }
